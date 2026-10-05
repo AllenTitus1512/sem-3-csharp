@@ -1,56 +1,94 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
-namespace part_A_lab7
+namespace lab6
 {
-    class calculate
+    class employee
     {
-        public float add(float a, float b)
+        string empno,empname,address;
+        public employee()
         {
-            return (a + b);
         }
-        public float sub(float a, float b)
+        public employee(string empno,string empname,string address)
         {
-            return (a - b);
+            this.empno=empno;
+            this.empname=empname;
+            this.address=address;
         }
-        public float mul(float a, float b)
+        public virtual void display()
         {
-            return (a * b);
-        }
-        public float div(float a, float b)
-        {
-            return (a / b);
-        }
-        public float rem(float a, float b)
-        {
-            return (a % b);
+            Console.WriteLine("Employee no:"+ empno);
+            Console.WriteLine("Employee name:"+ empname);
+            Console.WriteLine("Employee address:"+ address);
         }
     }
-    public delegate float operation(float a, float b);
+
+    class salary : employee
+    {
+        double bs, da, hra, gross;
+        public salary()
+            : base()
+        {
+            bs = 0.0f;
+            da = 0.0f;
+            hra = 0.0f;
+            gross = 0.0f;
+        }
+        public salary(string empno, string empname, string address, double bs)
+            : base(empno, empname, address)
+        {
+            this.bs = bs;
+        }
+        public void sal_calculate()
+        {
+            if (bs < 20000)
+            {
+                da = 0.70 * bs;
+                hra = 0.15 * bs;
+            }
+            else if (bs > 20000 && bs < 30000)
+            {
+                da = 0.75 * bs;
+                hra = 0.18 * bs;
+            }
+            else
+            {
+                da = 0.85 * bs;
+                hra = 0.20 * bs;
+            }
+            gross = bs + da + hra;
+        }
+        public override void display()
+        {
+            base.display();
+            Console.WriteLine("Basic Salary:" + bs);
+            Console.WriteLine("Gross salary:" + gross);
+            Console.WriteLine();
+        }
+    }
     class Program
     {
         static void Main(string[] args)
         {
-            calculate c = new calculate();
-            operation cd = new operation(c.add);
-            Console.WriteLine("Enter first number:");
-            float a = float.Parse(Console.ReadLine());
-            Console.WriteLine("Enter Second number:");
-            float b = float.Parse(Console.ReadLine());
-
-            Console.WriteLine("The sum is:" + cd(a, b));
-            cd += c.sub;
-
-            Console.WriteLine("The difference is:" + cd(a, b));
-            cd += c.mul;
-
-            Console.WriteLine("The product is:" + cd(a, b));
-            cd += c.div;
-
-            Console.WriteLine("The quotient is:" + cd(a, b));
-            cd += c.rem;
-
-            Console.WriteLine("The remainder is:" + cd(a, b));
-
+            String empno, empname, address;
+            Double bs;
+            Console.Write("Enter the enmployee number:");
+            empno = Console.ReadLine();
+            Console.Write("Enter the employee name:");
+            empname = Console.ReadLine();
+            Console.Write("Enter the employee address:");
+            address = Console.ReadLine();
+            Console.Write("Enter the employee basic salary");
+            bs = double.Parse(Console.ReadLine());
+            Console.WriteLine();
+            salary s = new salary(empno, empname, address, bs);
+            s.sal_calculate();
+            s.display();
         }
     }
 }
+        
+    
+afd
